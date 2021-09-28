@@ -1,0 +1,38 @@
+buildscript {
+    /*build.gradle에 전역변수 로 사용할 것들 정의*/
+    ext{
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories{
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+/*자바, 스프링부트를 사용할때 꼭 필요한 플로그인 4개*/
+apply plugin : 'java'
+apply plugin : 'eclipse'
+apply plugin : 'org.springframework.boot'
+apply plugin : 'io.spring.dependency-management' /*스프링 부트의 의존성을 관리해주는 플러그인*/
+
+group 'com.mjkim.boot'
+version '1.0-SNAPSHOT'
+
+/*각종 의존 라이브러리를 어디서 받아올지 지정
+* 기본 : mavencentral -> 설정및 복잡
+* */
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+/*프로젝트 개발에 필요한 의존성들을 선언하는곳
+* 특정 버전을 작성을 안해야만 전역변수의 spring boot version에 맞게 알아서 설정을 해줌
+* */
+dependencies {
+    compileClasspath('org.springframework.boot:spring-boot-starter-web')
+    testCompileClasspath('org.springframework.boot:spring-boot-starter-test')
+}

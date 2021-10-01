@@ -1,17 +1,17 @@
 package com.mjkim.book.springboot.web;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class) // 1
+@ExtendWith(SpringExtension.class) // 1
 @WebMvcTest(controllers = HelloController.class) // 2
 public class HelloControllerTest {
 
@@ -29,7 +29,7 @@ public class HelloControllerTest {
 }
 
 /*
- 1. @RunWith(SpringRunner.class)
+ 1. @RunWith(SpringRunner.class) -> junit5에서는 ExtentWith로 변경
     - 테스트를 진행 할 때 Junit에 내장된 실행자 외에 다른 실행자 실행시킴
     - SpringRunner는 스프링 실행자를 사용
     - 스프링 부트 테스트와 JUnit 사이에 연결자 역할

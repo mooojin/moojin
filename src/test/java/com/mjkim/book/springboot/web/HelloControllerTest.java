@@ -7,9 +7,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class) // 1
 @WebMvcTest(controllers = HelloController.class) // 2
@@ -25,6 +25,20 @@ public class HelloControllerTest {
         mvc.perform(get("/hello")) // 5
                 .andExpect(status().isOk()) // 6
                 .andExpect(content().string(hello)); // 7
+    }
+
+    @Test
+    public void helloDtoReturn() throws Exception {
+        String name = "hello";
+        int amount = 100;
+
+        mvc.perform(
+                        get("/hello/dto")
+                                .param("name", name) // 8
+                                .param("amount", String.valueOf(amount)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(name))) // 9
+                .andExpect(jsonPath("$.amount", is(amount)));
     }
 }
 
@@ -56,4 +70,13 @@ public class HelloControllerTest {
 
  7. .andExpect(content().string(hello))
     - 응답의 본문이 맞는지 검증한다.
+
+ 8. .param
+    - API 테스트할때 사용될 요청 파라미터 정의
+    - String만 허용
+    - 숫자/날짜 테스트시에는 String변환필요
+
+ 9.  .jsonPath
+    - JOSN응답값을 필드별로 검증가능
+    - $를 기준으로 필드명 명시
 * */
